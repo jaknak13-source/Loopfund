@@ -14,7 +14,7 @@ It runs in dry mode: a simulated ledger that uses real market prices, real
 trading fees, and real FX rates, but places no real orders. Live execution is
 intentionally gated and unimplemented.
 
-![loopfund dashboard showing the multi-agent roster](docs/dashboard-agents.png)
+![loopfund dashboard showing a dry-mode portfolio with positions, P&L, and allocation](docs/dashboard.png)
 
 ## Disclaimer
 
@@ -178,6 +178,8 @@ Core agents are Research, Macro, Fundamentals, Sentiment, IPO/M&A, AltData,
 Quant, Risk (a skeptic with veto power), and a Decision coordinator. Optional
 dynamic agents are defined as markdown briefings in `agents/briefings/*.md`, so
 you add or change one by editing a markdown file.
+
+![loopfund agents tab showing the specialist agent roster](docs/dashboard-agents.png)
 
 Findings are combined by evidence-weighted aggregation, not a majority vote. The
 Risk agent can veto or haircut a proposed action. The Decision agent makes one
