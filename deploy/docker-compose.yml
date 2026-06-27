@@ -1,0 +1,53 @@
+# Full stack for any Docker host (a VPS, a cloud VM, or your own machine):
+#   backend — the multi-agent fund + dashboard API + 24/7 deliberation loop
+#   mcp     — the MCP server over streamable HTTP (remote MCP clients)
+#   web     — nginx serving the built dashboard, proxying /api and /mcp
+#
+# The model backend and any API keys are read from the .env file (see
+# .env.example). By default loopfund runs against a local model server.
+#
+# Run from the repo root:  docker compose -f deploy/docker-compose.yml up --build
+# (build context is the repo root; this file lives in deploy/).
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: loopfund-backend
+    env_file: ../.env
+    environment:
+      LOOPFUND_AUTOLOOP: "3600"   # run a deliberation cycle every hour, unattended
+    volumes:
+      - fund-data:/app/data
+      - fund-logs:/app/logs
+    restart: unless-stopped
+
+  mcp:
+    image: loopfund-backend          # same image, different command
+    env_file: ../.env
+    environment:
+      MCP_TRANSPORT: "http"
+      MCP_HOST: "0.0.0.0"
+      MCP_PORT: "8600"
+    command: ["python", "-m", "mcp_server.server"]
+    volumes:
+      - fund-data:/app/data           # shares the fund's state with the backend
+      - fund-logs:/app/logs
+    depends_on: [backend]
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.web
+    image: loopfund-web
+    ports:
+      # Publish to localhost only by default. To expose publicly, change to
+      # "8080:80" AND add authentication (see deploy/nginx.conf) + a firewall.
+      - "127.0.0.1:8080:80"
+    depends_on: [backend, mcp]
+    restart: unless-stopped
+
+volumes:
+  fund-data:
+  fund-logs:

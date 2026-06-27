@@ -1,0 +1,29 @@
+EXAMPLE TOOL PLUGIN — rename to `myplugin.py` (drop the .txt) to activate.
+
+A plugin is any .py file in tools/plugins/ that defines `register(reg)`. It is
+auto-loaded at startup. Each tool is an async function; agents call it by name
+through the registry (so the call is logged and retried). Example:
+
+    # tools/plugins/myplugin.py
+    import httpx
+
+    async def fear_greed_index(**params):
+        # any free API / computation; return a JSON-serializable dict
+        async with httpx.AsyncClient(timeout=15) as c:
+            r = await c.get("https://api.alternative.me/fng/")
+            r.raise_for_status()
+            data = r.json()["data"][0]
+        return {"value": int(data["value"]), "label": data["value_classification"],
+                "source": "alternative.me", "stale": False}
+
+    def register(reg):
+        reg.register("fear_greed_index", fear_greed_index)
+
+Then any agent briefing can declare it:
+
+    tools:
+      - name: fear_greed_index
+        params: {}
+
+That is the whole extension path for new data/tools. New AGENTS are added the
+same way via agents/briefings/*.md. See docs/EXTENDING.md.

@@ -1,0 +1,16 @@
+# Normalize line endings so scripts work after a clone on any OS.
+* text=auto
+
+# Shell scripts MUST stay LF even when cloned on Windows.
+*.sh   text eol=lf
+
+# Windows batch files are safest as CRLF.
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+
+# Treat the committed frontend bundle and binaries as binary (no EOL munging).
+*.png  binary
+*.jpg  binary
+*.ico  binary
+*.woff binary
+*.woff2 binary

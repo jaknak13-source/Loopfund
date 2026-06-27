@@ -1,0 +1,33 @@
+# Core (Phase 0)
+pydantic>=2.6
+pydantic-settings>=2.2
+pyyaml>=6.0
+python-dotenv>=1.0
+tenacity>=8.2
+httpx>=0.27
+structlog>=24.1
+
+# Tests
+pytest>=8.0
+pytest-asyncio>=0.23
+
+# Data (free sources)
+yfinance>=0.2.40
+feedparser>=6.0
+requests>=2.31
+numpy>=1.26
+pandas>=2.0
+
+# Dashboard backend
+fastapi>=0.110
+uvicorn>=0.29
+
+# MCP server (exposes the fund as Model Context Protocol tools)
+mcp>=1.2
+
+# Optional (enable the matching data source / feature)
+# fredapi>=0.5            # FRED macro series (needs FRED_API_KEY)
+# praw>=7.7              # Reddit (needs app creds)
+# sentence-transformers  # better embeddings than the built-in hashing embedder
+
+# Frontend deps live in dashboard/web/package.json (npm install)

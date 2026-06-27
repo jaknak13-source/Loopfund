@@ -1,0 +1,21 @@
+[project]
+name = "loopfund"
+version = "0.1.0"
+description = "Local-first autonomous multi-agent investment research and portfolio manager (dry-mode first)"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+# Runtime-generated, model-authored, and saved research scripts — not source.
+extend-exclude = ["quant/scripts/sandbox", "quant/scripts/library", "quant/scripts/artifacts"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_ignores = true
+ignore_missing_imports = true

@@ -1,0 +1,41 @@
+# secrets — never commit
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+config/secrets.yaml
+
+# data / artifacts
+data/
+!data/.gitkeep
+*.db
+*.sqlite
+*.sqlite3
+lancedb/
+quant/scripts/artifacts/
+quant/scripts/sandbox/
+quant/scripts/library/
+logs/
+*.log
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# node / react
+dashboard/web/node_modules/
+# (dashboard/web/dist is committed so the app runs without Node; rebuild with npm run build)
+
+# local scratch / planning files
+session_exports/
+*.local.md
+
+# os
+.DS_Store

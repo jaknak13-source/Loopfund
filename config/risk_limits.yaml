@@ -1,0 +1,41 @@
+# Machine-readable mirror of the hard limits in docs/STRATEGY.md.
+# RiskAgent enforces these in code; docs/STRATEGY.md is the human-readable source.
+
+max_single_asset_weight: 0.20   # single stocks / crypto
+max_etf_weight: 0.50            # broad diversified ETFs may go higher (already diversified)
+max_single_sector_weight: 0.35
+max_crypto_weight: 0.10
+min_cash_buffer: 0.05
+max_turnover_per_window: 0.30
+allow_leverage: false
+allow_short: false
+min_positions_before_concentration: 5
+kelly_fraction_cap: 0.5      # never size above half-Kelly
+
+# Drawdown brakes — the controls that stop a slow bleed becoming a -50% disaster.
+# Tiers escalate automatically as equity falls from its high-water mark.
+max_drawdown_soft: 0.08      # >8% off peak  -> REDUCE: no new single-stock/crypto risk, core only
+max_drawdown_hard: 0.15      # >15% off peak -> DE-RISK: sell non-core, raise cash, no buys
+daily_loss_limit: 0.06       # >6% loss in one day -> halt new risk for the window
+stop_loss_pct: 0.20          # a single position down >20% from entry is trimmed/exited
+target_portfolio_vol: 0.15   # annualized exposure target (informational / future scaling)
+
+# Broad, already-diversified ETFs exempt from the single-stock concentration cap.
+broad_etfs:
+  - SPY
+  - QQQ
+  - VTI
+  - VOO
+  - IWM
+  - GLD
+  - SLV
+  - TLT
+  - EFA
+  - VEA
+  - VWO
+
+# Fee model for the simulated ledger (EUR). Configurable per broker later.
+fees:
+  model: flat                # flat | tiered
+  flat_eur: 1.0              # Trade-Republic-like 1 EUR/order
+  fx_spread_bps: 25         # basis points cost when converting to/from EUR

@@ -1,0 +1,59 @@
+mode: dry
+base_currency: EUR
+watchlist:
+- SPY
+- QQQ
+- NVDA
+- AAPL
+- MSFT
+- AMZN
+- GOOGL
+- XOM
+- GLD
+- BTC-USD
+dashboard:
+  host: 127.0.0.1
+  port: 8500
+portfolio:
+  starting_cash: 1000.0
+  weekly_topup: 0
+  vol_target: 0.2
+  baseline:
+    enabled: true
+    weights:
+      SPY: 0.15
+      GLD: 0.05
+    deploy_step: 0.1
+decision:
+  interval_hours: 1
+  reminder_hours: 1
+  allow_ai_override: true
+  council_candidates: 2
+  max_buys_per_cycle: 3
+  min_hold_hours: 24
+  no_action_backoff_max: 4
+learning:
+  horizon_days: 5
+memory:
+  max_entries: 7500
+loops:
+  loop_interval_seconds: 1800
+  research_interval_minutes: 30
+  sentiment_interval_minutes: 120
+  altdata_interval_minutes: 240
+  idle_max_days: 7
+execution:
+  max_fee_pct: 0.02
+inference:
+  max_concurrent: 1
+  request_timeout_s: 300
+agents:
+  allow_code_execution: false   # OFF by default; opt-in. Runs model-authored Python (sandboxed on macOS, refused without an OS sandbox on Linux/Windows).
+  allow_web: true
+  research_timeout_s: 600
+  research_max_attempts: 3
+  allow_meta: true
+  max_dynamic_agents: 8
+logging:
+  level: INFO
+  dir: logs

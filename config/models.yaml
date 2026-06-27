@@ -1,0 +1,63 @@
+# Which model backend + model each profile/agent uses.
+#
+# `backend` is one of the names loopfund registers (see models_adapter/router.py):
+#   LOCAL  (no API key):  local (LM Studio :1234) · ollama (:11434) · vllm (:8000)
+#   CLOUD  (needs key):   openai · anthropic · gemini · openrouter · groq ·
+#                         together · deepseek · mistral · xai · qwen
+# Every backend's URL/key can be overridden in .env. You can also switch all of
+# this live from the dashboard Settings tab — no restart, no file editing.
+#
+# DEFAULT = fully local via LM Studio. Install LM Studio (or Ollama), load any
+# instruct model, then set `model:` below to that model's id. Or switch `backend:`
+# to a cloud provider and paste its key in the dashboard.
+
+default:
+  backend: local
+  model: local-model          # <-- set to the model id loaded in LM Studio / Ollama
+  temperature: 0.3
+  max_tokens: 4096
+  supports_system_role: true  # set false for models with no system role (e.g. some Gemma builds)
+
+dev:
+  backend: local
+  model: local-model
+  temperature: 0.3
+  max_tokens: 1536
+  supports_system_role: true
+
+creative:
+  backend: local
+  model: local-model
+  temperature: 0.8
+  max_tokens: 2048
+  supports_system_role: true
+
+vision:
+  backend: local
+  model: local-model
+  temperature: 0.2
+  max_tokens: 600
+  supports_system_role: true
+
+# Per-agent overrides merge on top of the chosen profile.
+agents:
+  QuantAgent:
+    temperature: 0.1
+  MemoryAgent:
+    temperature: 0.2
+  DecisionAgent:
+    temperature: 0.2
+    max_tokens: 4096
+
+# ---------------------------------------------------------------------------
+# Example cloud configs — copy the fields you want into the profiles above.
+#
+# OpenAI:     backend: openai      model: gpt-4o-mini        (OPENAI_API_KEY)
+# Anthropic:  backend: anthropic   model: claude-sonnet-4-6  (ANTHROPIC_API_KEY)
+# Gemini:     backend: gemini      model: gemini-2.5-flash   (GEMINI_API_KEY)
+# OpenRouter: backend: openrouter  model: meta-llama/llama-3.1-70b-instruct  (OPENROUTER_API_KEY)
+# Groq:       backend: groq        model: llama-3.3-70b-versatile            (GROQ_API_KEY)
+# DeepSeek:   backend: deepseek    model: deepseek-chat      (DEEPSEEK_API_KEY)
+# Qwen Cloud: backend: qwen        model: qwen-plus          (DASHSCOPE_API_KEY)
+# Ollama:     backend: ollama      model: llama3.1           (no key)
+# ---------------------------------------------------------------------------
