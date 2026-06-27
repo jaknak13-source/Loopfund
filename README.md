@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)
 
-loopfund is a local-first, always-on multi-agent investment-research and
+loopfund is a local first, always on multi agent investment research and
 portfolio-management sandbox. It runs a continuous research loop in which
 specialist agents study a watchlist using free market data, then a coordinator
 agent makes one allocation decision per interval against a simulated EUR ledger.
